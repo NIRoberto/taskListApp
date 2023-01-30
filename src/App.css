@@ -26,12 +26,23 @@
   height: 100vh;
   position: relative;
 }
-.App .top {
+
+/* here */
+.dark .top {
   background-image: url(/public/images/bg-desktop-dark.jpg);
 }
 
-.App .bottom {
+/* light here */
+.light .top {
+  background-image: url(/public/images/bg-desktop-light.jpg);
+}
+
+.dark .bottom {
   background-color: var(--Very-Dark-Blue);
+}
+
+.light .bottom {
+  background-color: var(--Very-Light-Gray);
 }
 
 .App .on_top {
@@ -52,14 +63,23 @@
   color: white;
 }
 .App .on_top button {
-  background-color: rgb(12, 12, 236);
   padding: 1rem;
   outline: none;
   width: 100%;
   margin: 1rem 0;
-  color: white;
   border: none;
   border-radius: 5px;
+}
+
+.dark .on_top button {
+  background-color: var(--Very-Dark-Desaturated-Blue);
+  color: var(--Light-Grayish-Blue);
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+.light .on_top button {
+  background-color: var(--Very-Light-Gray);
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+  color: var(--Very-Dark-Desaturated-Blue);
 }
 
 .App .on_top img {
@@ -70,6 +90,18 @@
 .App .list {
   background-color: var(--Very-Dark-Desaturated-Blue);
   border-radius: 5px;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+
+.dark .list {
+  background-color: var(--Very-Dark-Desaturated-Blue);
+  border-radius: 5px;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+
+.light .list {
+  background-color: var(--Very-Light-Gray);
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
 
 .App .list ul {
@@ -86,6 +118,15 @@
   border-bottom: 1px solid rgb(56, 55, 55);
 }
 
+.dark .list ul li {
+  color: var(--Light-Grayish-Blue);
+  border-bottom: 1px solid var(--Very-Dark-Desaturated-Blue);
+}
+.light .list ul li {
+  border-bottom: 1px solid var(--Very-Light-Grayish-Blue);
+  color: var(--Very-Dark-Desaturated-Blue);
+}
+
 .App .on_top .action {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -100,6 +141,13 @@
   color: var(--Light-Grayish-Blue);
 }
 
+.dark .on_top span {
+  color: var(--Light-Grayish-Blue);
+}
+.light .on_top span {
+  color: var(--Very-Dark-Grayish-Blue);
+}
+
 input[type="checkbox"]:checked {
   background-color: red;
   background-image: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
@@ -110,7 +158,6 @@ input[type="checkbox"]:checked::after {
 input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
-  border: 1px solid rgb(216, 216, 245);
   margin-top: -6px;
   background: none;
   width: 25px;
@@ -120,6 +167,14 @@ input[type="checkbox"] {
   height: 25px;
   cursor: pointer;
   border-radius: 50%;
+}
+
+.dark input[type="checkbox"] {
+  border: 1px solid var(--Light-Grayish-Blue-hover);
+}
+
+.light input[type="checkbox"] {
+  border: 1px solid var(--very-Dark-Grayish-Blue);
 }
 input[type="checkbox"]:after {
   content: url("../public/images/icon-check.svg");
@@ -156,10 +211,10 @@ input[type="checkbox"]:hover {
 .App .viewTodo {
   position: absolute;
   left: 0;
-  border: 1px solid var(--very-Dark-Grayish-Blue);
   right: 0;
   top: 20%;
   margin-bottom: 2rem;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
   padding: 1rem;
   margin: 0 auto;
   flex-direction: column;
@@ -167,6 +222,16 @@ input[type="checkbox"]:hover {
   background-color: var(--Very-Dark-Blue);
   border-radius: 5px;
 }
+
+.dark .addTodo,
+.dark .viewTodo {
+  background-color: var(--Very-Dark-Blue);
+}
+.light .addTodo,
+.light .viewTodo {
+  background-color: var(--Very-Light-Gray);
+}
+
 .App .addTodo form div {
   display: flex;
   flex-direction: column;
@@ -177,17 +242,28 @@ input[type="checkbox"]:hover {
   outline: none;
   border: 1px solid var(--Dark-Grayish-Blue);
   padding: 1rem;
-  color: var(--Light-Grayish-Blue);
   width: 100%;
   background-color: var(--Very-Dark-Blue);
   font-size: 1.5rem;
   border-radius: 5px;
-
   margin: 0.5rem 0;
   font-size: small;
 }
-label {
+.dark .addTodo form input,
+.dark .addTodo form textarea {
+  background-color: var(--Very-Dark-Blue);
   color: var(--Light-Grayish-Blue);
+}
+.light .addTodo form input,
+.light .addTodo form textarea {
+  background-color: var(--Very-Light-Gray);
+  color: var(--very-Dark-Grayish-Blue);
+}
+.dark label {
+  color: var(--Light-Grayish-Blue);
+}
+.light label {
+  color: var(--very-Dark-Grayish-Blue);
 }
 .App .addTodo form button {
   width: 20%;

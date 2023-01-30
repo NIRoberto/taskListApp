@@ -1,4 +1,6 @@
 import { useState } from "react";
+import bgDark from "/images/bg-desktop-dark.jpg";
+import bgLight from "/images/bg-desktop-light.jpg";
 import { AiOutlineClose } from "react-icons/ai";
 import "./App.css";
 
@@ -67,8 +69,15 @@ function App() {
   };
   let real = active || completed ? filtered : todos;
   return (
-    <div className={`${dark ? "dark" : "light"} App`}>
-      <div className="top"></div>
+    <div className="App">
+      <div
+        className="top"
+        style={{
+          backgroundImage: `${
+            dark ? "url(" + bgDark + ")" : "url(" + bgLight + ")"
+          }`,
+        }}
+      ></div>
       <div className="bottom"></div>
       <div className="on_top">
         <div className="name">
@@ -76,19 +85,11 @@ function App() {
             <h1>TODO</h1>
           </div>
           <div>
-            {!dark ? (
-              <img
-                onClick={() => setDark(!dark)}
-                src="/images/icon-moon.svg"
-                alt="light"
-              />
-            ) : (
-              <img
-                onClick={() => setDark(!dark)}
-                src="/images/icon-sun.svg"
-                alt="light"
-              />
-            )}
+            <img
+              onClick={() => setDark(!dark)}
+              src={`/images/icon-${dark ? "sun" : "moon"}.svg`}
+              alt="light"
+            />
           </div>
         </div>
         <div>
