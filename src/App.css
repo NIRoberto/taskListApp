@@ -53,6 +53,7 @@
   right: 0%;
   top: 20%;
 }
+
 .App .on_top .name {
   display: flex;
   justify-content: space-between;
@@ -290,4 +291,29 @@ input[type="checkbox"]:hover {
   text-align: right;
   color: red;
   cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  .App .on_top {
+    width: 90%;
+    top: 10%;
+  }
+
+  .dark .addTodo,
+  .dark .viewTodo {
+    width: 90%;
+    top: 10%;
+  }
+  .light .addTodo,
+  .light .viewTodo {
+    width: 90%;
+    top: 10%;
+  }
+
+  .App {
+    display: grid;
+    grid-template-rows: 2fr 7fr;
+    height: 100vh;
+    position: relative;
+  }
 }
