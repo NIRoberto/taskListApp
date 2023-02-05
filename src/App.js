@@ -22,6 +22,7 @@ function App() {
   const [updateDesc, setUpdateDesc] = useState("");
   const [todos, setTodos] = useState([]);
   async function handleSubmit(event) {
+    event.preventDefault();
     if (!title && !desc) return;
     const res = await axios.post("http://127.0.0.1:5000/api/v1/todo", {
       title,
