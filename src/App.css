@@ -218,6 +218,7 @@ input[type="checkbox"]:hover {
   box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
   padding: 1rem;
   margin: 0 auto;
+  transition: display 10s ease-in-out 0.3s;
   flex-direction: column;
   width: 50%;
   background-color: var(--Very-Dark-Blue);

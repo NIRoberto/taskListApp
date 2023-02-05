@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 import { AiOutlineClose } from "react-icons/ai";
 import "./App.css";
 
@@ -18,54 +20,79 @@ function App() {
   const [dark, setDark] = useState(true);
   const [updateTitle, setUpdateTitle] = useState("");
   const [updateDesc, setUpdateDesc] = useState("");
-
   const [todos, setTodos] = useState([]);
-
-  function handleSubmit(event) {
-    event.preventDefault();
+  async function handleSubmit(event) {
     if (!title && !desc) return;
-    setTodos([
-      ...todos,
-      {
-        id: todos.length + 1,
-        title: title,
-        description: desc,
-        completed: false,
-      },
-    ]);
+    await axios.post("http://127.0.0.1:5000/api/v1/todo", {
+      title,
+      description: desc,
+    });
     setTitle("");
     setDesc("");
     setCreate(false);
   }
-  const handleRemoveTodo = (index) => {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
+
+  const handleRemoveTodo = async (id) => {
+    const res = await axios.delete(
+      `https://tasklistapi.onrender.com/api/v1/todo/${id}`
+    );
+    if (res.status === 204) window.location.reload(true);
   };
-  function handleTodoClick(index) {
-    const newTodos = [...todos];
-    todos[index].completed = !todos[index].completed;
-    setTodos(newTodos);
+
+  async function handleTodoClick(id) {
+    let displayTodo = await axios.get(
+      `https://tasklistapi.onrender.com/api/v1/todo/${id}`
+    );
+    const res = await axios.patch(
+      `https://tasklistapi.onrender.com/api/v1/todo/${id}`,
+      {
+        completed: !displayTodo.data.data.Todo.completed,
+      }
+    );
+
+    if (res.status === 200) {
+      window.location.reload(true);
+    }
   }
-  function displaySingle(index) {
-    let displayTodo = todos.find((el, i) => i === index);
-    setDisplay(displayTodo);
-    setUpdateTitle(displayTodo.title);
-    setUpdateDesc(displayTodo.description);
+  async function displaySingle(id) {
+    let displayTodo = await axios.get(
+      `https://tasklistapi.onrender.com/api/v1/todo/${id}`
+    );
+    setDisplay(displayTodo.data.data.Todo);
+    setUpdateTitle(displayTodo.data.data.Todo.title);
+    setUpdateDesc(displayTodo.data.data.Todo.description);
   }
 
-  const handleUpdate = (event) => {
-    event.preventDefault();
-    const index = todos.findIndex((obj) => {
-      return obj.id === display.id;
-    });
-    todos[index].title = updateTitle;
-    todos[index].description = updateDesc;
+  const handleUpdate = async () => {
+    await axios.patch(
+      `https://tasklistapi.onrender.com/api/v1/todo/${display._id}`,
+      {
+        title: updateTitle,
+        description: updateDesc,
+      }
+    );
+
     setUpdateTitle("");
     setUpdateDesc("");
     setView(false);
   };
+
+  useEffect(() => {
+    async function fetchTodo() {
+      try {
+        const response = await axios(
+          "https://tasklistapi.onrender.com/api/v1/todo"
+        );
+        setTodos(response.data.data.todos);
+      } catch (error) {
+        console.log(error.response);
+      }
+    }
+    fetchTodo();
+  }, []);
+
   let real = active || completed ? filtered : todos;
+
   return (
     <div className={`${dark ? "dark" : "light"} App`}>
       <div className="top"></div>
@@ -98,12 +125,11 @@ function App() {
         </div>
         <div className="list">
           <ul>
-            {real.map((todo, index) => {
-              const { title, id } = todo;
+            {real.map((todo) => {
+              const { title, _id } = todo;
               return (
-                <li key={id}>
-                  <span onClick={() => handleTodoClick(index)}>
-                    {" "}
+                <li key={_id}>
+                  <span onClick={() => handleTodoClick(todo._id)}>
                     <input
                       type="checkbox"
                       name="complete"
@@ -114,7 +140,7 @@ function App() {
                   <span
                     onClick={() => {
                       setView(true);
-                      displaySingle(index);
+                      displaySingle(todo._id);
                     }}
                     style={{
                       textDecoration: todo.completed ? "line-through" : "none",
@@ -122,7 +148,7 @@ function App() {
                   >
                     {title}
                   </span>
-                  <span onClick={() => handleRemoveTodo(index)}>
+                  <span onClick={() => handleRemoveTodo(todo._id)}>
                     <AiOutlineClose />
                   </span>
                 </li>
