@@ -24,10 +24,13 @@ function App() {
   async function handleSubmit(event) {
     event.preventDefault();
     if (!title && !desc) return;
-    const res = await axios.post("http://127.0.0.1:5000/api/v1/todo", {
-      title,
-      description: desc,
-    });
+    const res = await axios.post(
+      "https://tasklistapi.onrender.com/api/v1/todo",
+      {
+        title,
+        description: desc,
+      }
+    );
     if (res.status !== 201) event.preventDefault();
     else window.location.reload(true);
 
